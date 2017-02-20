@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<accessibility-service    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/accessibility_simulate_click_test"
+    android:accessibilityEventTypes="typeAllMask"
+    android:packageNames="com.tencent.mm"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:notificationTimeout="100"
+    android:accessibilityFlags="flagDefault"
+    android:canRetrieveWindowContent="true"
+    />
+    <!--android:packageNames="sample.study.andy.andydemos|com.tencent.mm"
+    android:accessibilityEventTypes="typeNotificationStateChanged|typeWindowStateChanged|typeWindowContentChanged"
+    -->

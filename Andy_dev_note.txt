@@ -1,0 +1,59 @@
+======================================Andy's dev note =========================================
+
+1. Design Support Library 简介：//网上简介 http://www.bkjia.com/Androidjc/1010915.html
+    Google IO 2015的Design Support Library的控件进行代码编写。
+    gradle build script dependency：
+
+    compile 'com.android.support:design:22.2.0' //可修改版本号为自己匹配
+    Design Support Library包含8个控件，具体如下：
+
+    Widget Name	Description
+    android.support.design.widget.TextInputLayout	强大带提示的MD风格的EditText
+    android.support.design.widget.FloatingActionButton	MD风格的圆形按钮，来自于ImageView
+    android.support.design.widget.Snackbar	类似Toast，添加了简单的单个Action
+    android.support.design.widget.TabLayout	选项卡
+    android.support.design.widget.NavigationView	DrawerLayout的SlideMenu
+    android.support.design.widget.CoordinatorLayout	超级FrameLayout
+    android.support.design.widget.AppBarLayout	MD风格的滑动Layout
+    android.support.design.widget.CollapsingToolbarLayout	可折叠MD风格ToolbarLayout
+
+2. CoordinatorLayout 使用：
+    注意项：
+    当用户滚动RecyclerView，AppBarLayout可以这样响应滚动事件：
+    根据子view的滚动标志（scroll flag）来控制它们如何进入（滚入屏幕）与退出（滚出屏幕）。
+    Flag包括：
+    scroll：所有想滚动出屏幕的View都需要设置这个flag，没有设置这个flag的View将被固定在屏幕顶部。
+    enterAlways：这个flag让任意向下的滚动都会导致该View变为可见，启用快速“返回模式”。
+    enterAlwaysCollapsed：当你的视图已经设置minHeight属性又使用此标志时，你的视图只能已最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。
+    exitUntilCollapsed：this flag causes the view to scroll off until it is ‘collapsed’ (its minHeight) before exiting。
+    特别注意：所有使用scroll flag的View都必须定义在没有使用scroll flag的View前面，这样才能确保所有的View从顶部退出，留下固定的元素。
+        PS一句：CoordinatorLayout还提供了layout_anchor和layout_anchorGravity属性一起配合使用，可以用于放置floating view，比如FloatingActionButton与其他View的相对位置。
+
+3. AppBarLayout控件
+    一个ViewGroup，配合ToolBar与CollapsingToolbarLayout等使用,就是一个纯容器类。
+
+4. CollapsingToolbarLayout
+    可伸缩折叠的Toolbar （Collapsing Toolbar），直接添加Toolbar到AppBarLayout可以让你使用enterAlwaysCollapsed和exitUntilCollapsedscroll标志，
+    但是无法控制不同元素如何响应collapsing的细节。这里使用了CollapsingToolbarLayout的app:layout_collapseMode=”pin”来确保Toolbar在view折叠的时候仍然被固定在屏幕的顶部。
+    还可以做到更好的效果，当你让CollapsingToolbarLayout和Toolbar在一起使用的时候，title会在展开的时候自动变得大些，而在折叠的时候让字体过渡到默认值。
+    必须注意，在这种情况下你必须在CollapsingToolbarLayout上调用setTitle()，而不是在Toolbar上。除了固定住View，你还可以使用app:layout_collapseMode=”parallax”
+    （以及使用app:layout_collapseParallaxMultiplier=”0.7”来设置视差因子）来实现视差滚动效果（比如CollapsingToolbarLayout里面的一个ImageView），
+    这中情况和CollapsingToolbarLayout的app:contentScrim=”?attr/colorPrimary”属性一起配合更完美。
+
+    有一件事情必须注意，那就是CoordinatorLayout并不知道FloatingActionButton或者AppBarLayout的内部工作原理，它只是以Coordinator.Behavior的形式提供了额外的API，
+    该API可以使子View更好的控制触摸事件与手势以及声明它们之间的依赖，并通过onDependentViewChanged()接收回调。
+    使用CoordinatorLayout.DefaultBehavior(你的View.Behavior.class)注解或者在布局中使用app:layout_behavior=”com.example.app.你的View$Behavior”属性来定义view的默认行为。
+    framework让任意View和CoordinatorLayout结合在一起成为了可能。
+
+    注意：1. CoordinatorLayout 内的Toolbar 它的Context 并不属于AppCompatActivity,所以在 setSupportActionBar() 的时候需要注意。
+        比如：class TitleView extends Toolbar  当前TitleView 的context 是属于 mContext = android.view.ContextThemeWrapper@ea61257，所以如果强制 ((AppCompatActivity)mContext).setSupportActionBar(this);会报错.
+        2. toolbar  title 显示区域，如果在CollapsingToolbarLayout 指定LinearLayout内容布局，必须要预留出空间显示toolbar 否则会被档。可以在LinearLayout   android:paddingBottom="@dimen/main_title_bar_height"
+
+
+ 5. Android中 IntentService 与 Service 的区别.
+    IntentService在执行onCreate操作的时候，内部开了一个线程，去你执行的耗时操作.
+
+ 6. HandlerThread 和 Handler
+    android系统提供的Handler类内部的Looper默认绑定的是UI线程的消息队列，
+    对于非UI线程又想使用消息机制，那么HandlerThread内部的Looper是最合适的，它不会干扰或阻塞UI线程。
+    HandlerThread 内部实现创建一个线程创建自已的looper,然后将looper 传给Handler.

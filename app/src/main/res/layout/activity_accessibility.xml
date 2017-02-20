@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_accessibility"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="sample.study.andy.andydemos.function.accessibility.SimulationClickActivity">
+
+
+    <Button
+        android:text="AccessibilityService实现模拟点击"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="23dp"
+        android:id="@+id/button4"
+        android:onClick="accessibilitySimulateEventClicked" />
+
+    <Button
+        android:text="借助反射实现模拟点击"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button4"
+        android:layout_alignEnd="@+id/button4"
+        android:layout_marginTop="53dp"
+        android:id="@+id/button5"
+        android:onClick="reflectSimulateEventClicked" />
+
+    <Button
+        android:text="MotionEvent模拟点击"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="109dp"
+        android:id="@+id/button3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="66dp"
+        android:onClick="motionEventSimulateClickedClicked" />
+</RelativeLayout>

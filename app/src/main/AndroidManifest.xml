@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="sample.study.andy.andydemos">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.TabbedActivity"
+            android:label="@string/title_activity_tabbled"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ToolbarScrollingActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|locale|screenSize"
+            android:exported="true"
+            android:label="@string/title_activity_settings"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:taskAffinity="sameple.study.andy.demos"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <category android:name="android.intent.category.CATEGORY_DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MasterDetailActivityListActivity"
+            android:label="@string/title_masterdetailactivity_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MasterDetailActivityDetailActivity"
+            android:label="@string/title_masterdetailactivity_detail"
+            android:parentActivityName=".activity.MasterDetailActivityListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sample.study.andy.andydemos.activity.MasterDetailActivityListActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/title_activity_login" />
+
+        <service
+            android:name=".function.ipc.MessengerService"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.IPC_MESSAGE" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".function.apk.BrowserCallAppActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.andy.demo"
+                    android:pathPrefix="/params"
+                    android:scheme="andyapp" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.RefreshAndLoadmoreActivity" />
+        <activity android:name=".function.databinding.activity.DataBindingRecyclerActivity" />
+        <activity
+            android:name=".function.databinding.activity.LoginDatabindingActivity"
+            android:label="@string/title_activity_login_databinding" />
+        <activity
+            android:name=".function.media.activity.TestMediaMainActivity"
+            android:label="@string/title_activity_test_media_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".function.service.MyIntentService"
+            android:exported="false" />
+
+        <activity android:name=".function.handler.TestHandlerThreadActivity" />
+        <activity android:name=".function.eventbus.EventbusActivity_1" />
+        <activity android:name=".function.eventbus.EventbusActivity_2" />
+        <activity android:name=".function.ioc.android.TestIOCActivity" />
+        <activity android:name=".activity.testMVPActivity" />
+        <activity
+            android:name=".function.ui.expandsRecyclerview.TestExpandRecyclerViewActivity"
+            android:label="@string/title_activity_test_expand_recycler_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".function.accessibility.SimulationClickActivity" />
+        <activity android:name=".function.accessibility.MotionEventSimulateActivity" />
+        <activity android:name=".function.accessibility.AccessibilitySimulateActivity" />
+
+        <!-- 配置AccessibilityService-->
+        <service
+            android:name=".function.accessibility.AccessibilityClickedService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_config"/>
+        </service>
+    </application>
+
+</manifest>
